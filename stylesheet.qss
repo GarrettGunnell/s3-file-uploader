@@ -1,0 +1,12 @@
+* { 
+    background-color: #E4E4E4;
+    color: black; 
+}
+
+QLineEdit {
+    background-color: white;
+}
+
+QComboBox {
+    background-color: white;
+}

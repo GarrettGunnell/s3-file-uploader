@@ -1,4 +1,5 @@
 import sys
+import os
 import boto3
 from PyQt5.QtWidgets import *
 
@@ -48,6 +49,8 @@ class FileUploader(QWidget):
         s3.Bucket('cs493-gunnellg-bucket').put_object(Key=songName, Body=data)
 
     def uploadAlbum(self):
+        dp = QFileDialog.getExistingDirectory(self, "Select Directory")
+        print(dp)
         return
     
     def uploadArtist(self):

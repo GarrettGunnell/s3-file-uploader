@@ -41,9 +41,10 @@ class FileUploader(QWidget):
         self.move(qr.topLeft())
 
     def uploadMp3(self):
-        fp = QFileDialog.getOpenFileName(self, 'Open file', 'C:\\', "mp3 files (*.mp3)")
-        print(fp[0])
-        return
+        fp = QFileDialog.getOpenFileName(self, 'Open file', 'C:\\', "mp3 files (*.mp3)")[0]
+        if fp == '': return
+        songName = fp.split('/')[-1]
+        print(songName)
 
     def uploadAlbum(self):
         return

@@ -59,9 +59,22 @@ class FileUploader(QWidget):
             data = open(fp, 'rb')
             key = dname + '/' + filename
             s3.Bucket('cs493-gunnellg-bucket').put_object(Key=key, Body=data)
+            data.close()
     
     def uploadArtist(self):
-        return
+        dp = QFileDialog.getExistingDirectory(self, "Select Directory")
+        if dp == '': return
+        dname = dp.split('/')[-1]
+        for album in os.listdir(dp):
+            path = dp + '/' + album
+            if os.path.isfile(path): continue
+            for song in os.listdir(path):
+                fp = path + '/' + song
+                if song.split('.')[-1] != 'mp3': continue
+                data = open(fp, 'rb')
+                key = dname + '/' + album + '/' + song
+                s3.Bucket('cs493-gunnellg-bucket').put_object(Key=key, Body=data)
+                data.close()
 
 
 app = QApplication([])

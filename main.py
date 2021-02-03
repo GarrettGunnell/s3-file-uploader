@@ -44,7 +44,8 @@ class FileUploader(QWidget):
         fp = QFileDialog.getOpenFileName(self, 'Open file', 'C:\\', "mp3 files (*.mp3)")[0]
         if fp == '': return
         songName = fp.split('/')[-1]
-        print(songName)
+        data = open(fp, 'rb')
+        s3.Bucket('cs493-gunnellg-bucket').put_object(Key=songName, Body=data)
 
     def uploadAlbum(self):
         return

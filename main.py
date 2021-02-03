@@ -44,27 +44,27 @@ class FileUploader(QWidget):
     def uploadMp3(self):
         fp = QFileDialog.getOpenFileName(self, 'Open file', 'C:\\', "mp3 files (*.mp3)")[0]
         if fp == '': return
-        songName = fp.split('/')[-1]
+        song = fp.split('/')[-1]
         data = open(fp, 'rb')
-        s3.Bucket('cs493-gunnellg-bucket').put_object(Key=songName, Body=data)
+        s3.Bucket('cs493-gunnellg-bucket').put_object(Key=song, Body=data)
         data.close()
 
     def uploadAlbum(self):
         dp = QFileDialog.getExistingDirectory(self, "Select Directory")
         if dp == '': return
-        dname = dp.split('/')[-1]
-        for filename in os.listdir(dp):
-            if filename.split('.')[-1] != 'mp3': continue
-            fp = dp + '/' + filename
+        album = dp.split('/')[-1]
+        for song in os.listdir(dp):
+            if song.split('.')[-1] != 'mp3': continue
+            fp = dp + '/' + song
             data = open(fp, 'rb')
-            key = dname + '/' + filename
+            key = album + '/' + song
             s3.Bucket('cs493-gunnellg-bucket').put_object(Key=key, Body=data)
             data.close()
     
     def uploadArtist(self):
         dp = QFileDialog.getExistingDirectory(self, "Select Directory")
         if dp == '': return
-        dname = dp.split('/')[-1]
+        artist = dp.split('/')[-1]
         for album in os.listdir(dp):
             path = dp + '/' + album
             if os.path.isfile(path): continue
@@ -72,7 +72,7 @@ class FileUploader(QWidget):
                 fp = path + '/' + song
                 if song.split('.')[-1] != 'mp3': continue
                 data = open(fp, 'rb')
-                key = dname + '/' + album + '/' + song
+                key = artist + '/' + album + '/' + song
                 s3.Bucket('cs493-gunnellg-bucket').put_object(Key=key, Body=data)
                 data.close()
 
@@ -80,10 +80,8 @@ class FileUploader(QWidget):
 app = QApplication([])
 session = boto3.session.Session(profile_name='s3admin')
 s3 = session.resource('s3')
-
 with open("stylesheet.qss", "r") as fh:
     app.setStyleSheet(fh.read())
-
 fileUploader = FileUploader(s3)
 fileUploader.show()
 

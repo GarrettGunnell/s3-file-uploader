@@ -18,14 +18,17 @@ class FileUploader(QWidget):
         layout.addSpacing(10)
         
         self.uploadMp3Button = QPushButton("Upload .mp3")
+        self.uploadMp3Button.clicked.connect(self.uploadMp3)
         layout.addWidget(self.uploadMp3Button, 1)
         layout.addSpacing(10)
 
         self.uploadAlbumButton = QPushButton("Upload Album")
+        self.uploadAlbumButton.clicked.connect(self.uploadAlbum)
         layout.addWidget(self.uploadAlbumButton, 1)
         layout.addSpacing(10)
         
         self.uploadArtistButton = QPushButton("Upload Artist")
+        self.uploadArtistButton.clicked.connect(self.uploadArtist)
         layout.addWidget(self.uploadArtistButton, 1)
         layout.addSpacing(10)
         
@@ -36,6 +39,16 @@ class FileUploader(QWidget):
         centerPoint = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(centerPoint)
         self.move(qr.topLeft())
+
+    def uploadMp3(self):
+        return
+
+    def uploadAlbum(self):
+        return
+    
+    def uploadArtist(self):
+        return
+
 
 app = QApplication([])
 session = boto3.session.Session(profile_name='s3admin')

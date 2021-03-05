@@ -8,6 +8,8 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "genre"
           AttributeType: "S"
+        - AttributeName: "artist_album_song"
+          AttributeType: "S"
         - AttributeName: "artist"
           AttributeType: "S"
         - AttributeName: "album"
@@ -17,7 +19,7 @@ Resources:
       KeySchema:
         - AttributeName: "genre"
           KeyType: "HASH"
-        - AttributeName: "artist"
+        - AttributeName: "artist_album_song"
           KeyType: "RANGE"
       ProvisionedThroughput:
         ReadCapacityUnits: 1

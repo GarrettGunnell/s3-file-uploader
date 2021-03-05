@@ -78,7 +78,7 @@ class FileUploader(QWidget):
 
 
 app = QApplication([])
-session = boto3.session.Session(profile_name='s3admin')
+session = boto3.session.Session()
 s3 = session.resource('s3')
 with open("stylesheet.qss", "r") as fh:
     app.setStyleSheet(fh.read())

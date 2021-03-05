@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: AWS Cloudformation template to create the dynamo table
+Resources:
+  MusicTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: "music"
+      AttributeDefinitions:
+        - AttributeName: "genre"
+          AttributeType: "S"
+        - AttributeName: "artist"
+          AttributeType: "S"
+        - AttributeName: "album"
+          AttributeType: "S"
+        - AttributeName: "song"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "genre"
+          KeyType: "HASH"
+        - AttributeName: "artist"
+          KeyType: "RANGE"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      GlobalSecondaryIndexes:
+        -
+          IndexName: "artist_album"
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+          KeySchema:
+            - AttributeName: "artist"
+              KeyType: "HASH"
+            - AttributeName: "album"
+              KeyType: "RANGE"
+          Projection:
+            ProjectionType: ALL
+        -
+          IndexName: "album_song"
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+          KeySchema:
+            - AttributeName: "album"
+              KeyType: "HASH"
+            - AttributeName: "song"
+              KeyType: "RANGE"
+          Projection:
+            ProjectionType: ALL

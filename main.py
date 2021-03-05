@@ -1,6 +1,7 @@
 import sys
 import os
 import boto3
+import json
 from PyQt5.QtWidgets import *
 
 class FileUploader(QWidget):
@@ -43,7 +44,7 @@ class FileUploader(QWidget):
 
     def uploadMp3(self):
         fp = QFileDialog.getOpenFileName(self, 'Open file', 'C:\\', "mp3 files (*.mp3)")[0]
-        if fp == '': return
+        if fp == '' or fp.split('.')[-1] != 'mp3': return
         song = fp.split('/')[-1]
         data = open(fp, 'rb')
         s3.Bucket('cs493-gunnellg-bucket').put_object(Key=song, Body=data)
@@ -80,6 +81,7 @@ class FileUploader(QWidget):
 app = QApplication([])
 session = boto3.session.Session()
 s3 = session.resource('s3')
+dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
 with open("stylesheet.qss", "r") as fh:
     app.setStyleSheet(fh.read())
 fileUploader = FileUploader(s3)

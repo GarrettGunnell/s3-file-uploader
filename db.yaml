@@ -47,3 +47,13 @@ Resources:
               KeyType: "RANGE"
           Projection:
             ProjectionType: ALL
+        -
+          IndexName: "song"
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+          KeySchema:
+            - AttributeName: "song"
+              KeyType: "HASH"
+          Projection:
+            ProjectionType: ALL

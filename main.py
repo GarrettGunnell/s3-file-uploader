@@ -90,10 +90,9 @@ class FileUploader(QWidget):
                     'artist': artist,
                     'album': album,
                     'song': song.split('.mp3')[0],
-                    'info': {
-                        's3_key': key
-                    }
+                    's3_key': key
                 }
+
                 table.put_item(Item=table_item)
                 s3.Bucket('cs493-gunnellg-bucket').put_object(Key=key, Body=data)
                 data.close()
